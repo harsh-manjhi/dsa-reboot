@@ -1,26 +1,16 @@
-def LongestCharReplacement(s : str,k : int) -> int :
-    count = {}
-    result = 0
-    left = 0
-    max_freq = 0
+def LongestStrNonRepeating(s:str) -> int :
+    char_index_map = {}
+    max_len = 0
+    start = 0
+    for end in range(len(s)) :
+        char = s[end]
 
-    for right in range(len(s)) :
-        char = s[right]
-        count[char] = count.get(char,0) + 1
+        if char in char_index_map and char_index_map[char] >= start :
+            start = char_index_map[char] + 1
 
-        max_freq = max(max_freq,count[char])
-        
-        if (right - left + 1) - max_freq > k :
-            count[s[left]] -= 1
-            left += 1
+        char_index_map[char] = end
+        max_len = max(max_len, end - start + 1)
+    return max_len
 
-        
-        result = max(result, right - left + 1)
-    
-    print(count)
-    return result
-
-check = LongestCharReplacement('ABABBA',2)
+check = LongestStrNonRepeating('abcdabdc')
 print(check)
-
-        
